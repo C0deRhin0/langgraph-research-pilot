@@ -1,4 +1,5 @@
 import os
+import sys
 
 from dotenv import load_dotenv
 
@@ -23,13 +24,61 @@ def main():
         "messages": [],
     }
 
-    result = graph.invoke(initial_state, config={"configurable": {"thread_id": thread_id}})
+    config = {"configurable": {"thread_id": thread_id}}
+
+    # Check if we can resume from an existing checkpoint (HITL resume)
+    try:
+        # First, try to get current state - if it exists, we were interrupted
+        current_state = graph.get_state(config)
+        if current_state and current_state.next:
+            print("Resuming interrupted session...")
+            result = graph.invoke(None, config=config)
+        else:
+            # Start fresh
+            print("Starting new research session...")
+            result = graph.invoke(initial_state, config=config)
+    except Exception:
+        # Fallback: start fresh
+        result = graph.invoke(initial_state, config=config)
+
+    # Handle HITL interrupt before synthesis
+    # If interrupted, we wait here - the user can resume manually
+    while True:
+        current_state = graph.get_state(config)
+        if current_state.next and "synthesizer" in current_state.next:
+            # Interrupted before synthesis - let user review and approve
+            print("\n" + "=" * 60)
+            print("REVIEW: Search Results Ready")
+            print("=" * 60)
+
+            # Show accumulated results
+            search_results = current_state.values.get("search_results", [])
+            for i, sr in enumerate(search_results, 1):
+                print(f"\n### Iteration {i}: {sr.get('query', 'N/A')}")
+                for r in sr.get("results", [])[:3]:
+                    print(f"  - {r.get('title', 'No title')}")
+                    print(f"    {r.get('url', '')}")
+
+            print("\n" + "=" * 60)
+            response = input("\nProceed to synthesis? [y/n]: ").strip().lower()
+            if response == "y":
+                result = graph.invoke(None, config=config)
+                break
+            else:
+                print("Paused. Run again with same thread_id to resume.")
+                sys.exit(0)
+        else:
+            break
+
     report = result.get("final_report", "")
 
     os.makedirs("output", exist_ok=True)
     with open("output/report.md", "w", encoding="utf-8") as f:
         f.write(report)
 
+    print("\n" + "=" * 60)
+    print("FINAL REPORT")
+    print("=" * 60)
     print(report)
 
 
