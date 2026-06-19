@@ -1,15 +1,21 @@
 import os
 import sys
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
 
 from dotenv import load_dotenv
 
-from src.graph import build_graph
+from research_agent import build_graph
 
 
 def main():
-    load_dotenv()
+    load_dotenv(PROJECT_ROOT / ".env")
 
-    graph = build_graph()
+    graph = build_graph(PROJECT_ROOT / "research_memory.db")
     thread_id = "tedx-demo-thread"
     query = "Competitive landscape for SEA cybersecurity compliance SaaS"
 
@@ -72,8 +78,9 @@ def main():
 
     report = result.get("final_report", "")
 
-    os.makedirs("output", exist_ok=True)
-    with open("output/report.md", "w", encoding="utf-8") as f:
+    output_dir = PROJECT_ROOT / "output"
+    output_dir.mkdir(exist_ok=True)
+    with (output_dir / "report.md").open("w", encoding="utf-8") as f:
         f.write(report)
 
     print("\n" + "=" * 60)

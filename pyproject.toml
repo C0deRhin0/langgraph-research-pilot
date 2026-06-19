@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langgraph-research-pilot"
+version = "0.1.0"
+description = "LangGraph competitive intelligence and campaign strategy research agent."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "langgraph>=0.2.0",
+    "langgraph-checkpoint-sqlite>=2.0.0",
+    "langchain>=0.2.0",
+    "langchain-community>=0.2.0",
+    "langchain-anthropic>=0.3.0",
+    "tavily-python>=0.3.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.0.0",
+    "streamlit>=1.30.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
