@@ -26,9 +26,11 @@ Planner → Searcher → Evaluator ─┐
 ## Quick Start
 
 1. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    pip install -r requirements.txt
+    # or install the package in editable mode
+    pip install -e .
+    ```
 
 2. **Configure environment**
    ```bash
@@ -48,26 +50,36 @@ Planner → Searcher → Evaluator ─┐
 ```
 codebase/
 ├── README.md
+├── pyproject.toml
 ├── requirements.txt
 ├── .env.example
 ├── src/
-│   ├── __init__.py
-│   ├── state.py
-│   ├── prompts.py
-│   ├── tools.py
-│   ├── graph.py
-│   └── nodes/
+│   └── research_agent/
 │       ├── __init__.py
-│       ├── planner.py
-│       ├── searcher.py
-│       ├── evaluator.py
-│       ├── synthesizer.py
-│       └── hitl.py
+│       ├── application/
+│       │   ├── graph.py
+│       │   └── nodes/
+│       │       ├── planner.py
+│       │       ├── searcher.py
+│       │       ├── evaluator.py
+│       │       ├── synthesizer.py
+│       │       └── hitl.py
+│       ├── domain/
+│       │   ├── prompts.py
+│       │   └── state.py
+│       └── infrastructure/
+│           └── clients.py
 ├── examples/
 │   └── marketing_usecase.py
+├── demo/
+│   └── app.py
+├── docs/
+│   └── ARCHITECTURE.md
 └── tests/
     └── test_graph.py
 ```
+
+The `src/research_agent` package separates orchestration (`application`), business state and prompts (`domain`), and external adapters (`infrastructure`) while preserving the existing LangGraph workflow and CLI/demo entrypoints.
 
 ## Roadmap Alignment
 

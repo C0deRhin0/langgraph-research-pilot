@@ -1,0 +1,21 @@
+.opencode/
+
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment
+.env
+
+# LangGraph checkpointer
+*.db
+
+# Build outputs
+output/
+dist/
+build/
+*.egg-info/

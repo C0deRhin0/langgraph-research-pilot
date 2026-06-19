@@ -8,15 +8,22 @@ Shows:
 - Final report rendered as formatted Markdown
 """
 
+import sys
+from pathlib import Path
+
 import streamlit as st
 from dotenv import load_dotenv
 
-from src.graph import build_graph
-from src.state import ResearchState
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = PROJECT_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from research_agent import ResearchState, build_graph
 
 
 def main():
-    load_dotenv()
+    load_dotenv(PROJECT_ROOT / ".env")
 
     st.set_page_config(
         page_title="Competitive Intelligence Agent",
@@ -40,7 +47,7 @@ def main():
 
     # Initialize session state
     if "graph" not in st.session_state:
-        st.session_state.graph = build_graph()
+        st.session_state.graph = build_graph(PROJECT_ROOT / "research_memory.db")
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
