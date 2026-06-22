@@ -1,4 +1,4 @@
-from src.graph import build_graph
+from research_agent import build_graph
 
 
 def test_graph_builds():
