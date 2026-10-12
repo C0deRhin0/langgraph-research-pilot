@@ -114,4 +114,3 @@ This repository implements **Phase 0–3** of the technical roadmap:
 - **Phase 3**: Graph assembly
 
 A Streamlit interface is already included in `demo/app.py`. Provider-backed research requires local credentials; the presence of the UI does not establish research quality.
-<!-- Capture a cleanup item for project documentation -->
