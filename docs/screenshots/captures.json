@@ -1,0 +1,20 @@
+{
+  "project": "Research Pilot",
+  "kind": "Interface",
+  "note": "Running Streamlit interface. Provider-backed research not invoked.",
+  "capturedAt": "2026-10-23T05:38:41.119Z",
+  "screens": [
+    {
+      "file": "desktop.webp",
+      "caption": "Running Streamlit interface · provider-backed research not invoked",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "mobile.webp",
+      "caption": "Running Streamlit interface · responsive initial screen",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

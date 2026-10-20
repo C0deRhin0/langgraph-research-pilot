@@ -114,3 +114,13 @@ This repository implements **Phase 0–3** of the technical roadmap:
 - **Phase 3**: Graph assembly
 
 A Streamlit interface is already included in `demo/app.py`. Provider-backed research requires local credentials; the presence of the UI does not establish research quality.
+
+## Captures
+
+Running Streamlit interface. Provider-backed research not invoked.
+
+![Running Streamlit interface · provider-backed research not invoked](docs/screenshots/desktop.webp)
+
+![Running Streamlit interface · responsive initial screen](docs/screenshots/mobile.webp)
+
+Full capture descriptions and provenance: [captures.json](docs/screenshots/captures.json).
